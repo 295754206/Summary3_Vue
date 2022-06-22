@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地端链接 -->
+    <script src="CDN/vue.js"></script>
+    <title>Document</title>
+
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+
+</head>
+
+<body>
+    <div id="app">
+
+        <div v-show="true">
+            第一个div设置v-show="true"所以一定显示
+        </div><br>
+        <div v-show="false">
+            第二个div设置v-show="false"所以一定不显示
+        </div><br>
+        <input type="checkbox" v-model="isShow">(第三个div设置v-show="isShow"{{isShow}})
+        <div v-show='isShow'>
+            第三个div设置v-show="isShow"
+        </div><br>
+        <div>(第四个divv-show取决于item是否为4)</div>
+        <select v-model='item'>
+            <option value=1>item 为 1</option>
+            <option value=2>item 为 2</option>
+            <option value=3>item 为 3</option>
+            <option value=4>item 为 4</option>
+        </select>
+        <div v-show='item == 4'>
+            第四个divv-show取决于item是否为4
+        </div>
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                item: 1,
+                isShow: false
+            }
+        })
+    </script>
+</body>
+
+</html>

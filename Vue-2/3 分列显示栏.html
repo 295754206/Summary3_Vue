@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地端CDN -->
+    <script src="CDN/vue2.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <style>
+        .selected {
+            background-color: rgb(110, 253, 193);
+        }
+        /* 选取后改变字体颜色 */
+        
+        li {
+            cursor: pointer
+        }
+        /* 使用与停留在<a>标签时的滑鼠游标 */
+        
+        li:hover {
+            color: blue;
+            font-family: Microsoft JhengHei;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        /* 停留在<i>标签时候改变字体颜色与样式 */
+    </style>
+    <title>Document</title>
+
+    <!-- Vue與Vuex的CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- Bootstrap 4 JavaScript 的 CDN -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+    <!-- Bootstrap 4 CSS 的 CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+
+</head>
+
+<body>
+    <div id='app' class='container-fluid'>
+        <div class="row">
+
+            <!-- <div class="card" style="width: 18rem;"> -->
+            <div class="card mt-2 ml-2" style="width: 16%;">
+                <div class="card-header">
+                    关于医院
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" @click='item = 1' :class='{selected:item==1}'>医院沿革</li>
+                    <li class="list-group-item" @click='item = 2' :class='{selected:item==2}'>愿景宗旨</li>
+                    <li class="list-group-item" @click='item = 3' :class='{selected:item==3}'>院长的话</li>
+                </ul>
+            </div>
+
+            <div class="mt-2 ml-2" style="width: 80%;">
+                <div class="alert alert-primary" role="alert" v-show="item==1">
+                    医院沿革
+                </div>
+                <div class="alert alert-secondary" role="alert" v-show="item==2">
+                    愿景宗旨
+                </div>
+                <div class="alert alert-success" role="alert" v-show="item==3">
+                    院长的话
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                item: 1
+            }
+        })
+    </script>
+</body>
+
+</html>
