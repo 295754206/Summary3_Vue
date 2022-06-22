@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地端CDN -->
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/axios.js"></script>
+    <title>Document</title>
+
+    <!-- Vue的CDN -->
+    <!-- <script src="https://cdn.bootcss.com/vue/2.5.2/vue.min.js"></script> -->
+    <!-- axios的CDN -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+</head>
+
+<body>
+    <div id="app">
+        {{message}} <br> {{numbers.map(x=>x*2)}} <br>
+        <span v-pre>{{message}}</span> <br> {{same_name}} <br> {{mail}} <br>
+        <input type="text" :placeholder="yourname"> <br>
+        <input type="text" v-bind:placeholder="yourname"> <br>
+        <button v-on:click='sayHi'>sayHi</button> <br>
+        <button @click='sayHi2'>sayHi2</button> <br>
+        <button @click='sayHi3($event)'>sayHi3</button> <br> {{sayHi4()}} <br>
+        <input type="text" v-model='yourname2'> <br>
+        <button @click='sayHi5'>sayHi5</button> <br>
+        <p v-html='html_message'></p>
+        <p v-html='html_sympol'></p>
+        <ul>
+            <li v-for="x in users">{{x.name}}</li>
+        </ul>
+    </div>
+
+
+
+    <script>
+        var same_name = 'simple';
+        var mail = 'email';
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello,world!',
+                numbers: [1, 2, 3, 4, 5],
+                same_name: same_name,
+                mail,
+                yourname: '请输入你的名字',
+                yourname2: 'enter some',
+                html_message: '<a href="https://www.baidu.com">Vue</a>',
+                html_sympol: '&#8448',
+                users: []
+            },
+            mounted() {
+                var vm = this;
+                axios.get('https://jsonplaceholder.typicode.com/users')
+                    .then((response) => {
+                        vm.users = response.data;
+                    })
+            },
+            methods: {
+                sayHi() {
+                    alert('hi,welcom')
+                },
+                sayHi2: function() {
+                    alert('hi,welcom2')
+                },
+                sayHi3(event) {
+                    alert(`Hi,${event.target}`)
+                },
+                sayHi4() {
+                    return 'welcome you'
+                },
+                sayHi5() {
+                    alert(`Hi,${this.yourname2}!`)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

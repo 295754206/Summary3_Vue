@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地端CDN -->
+    <script src="CDN/vue.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap5.css">
+    <script src="CDN/bootstrap5_bundle.js"></script>
+    <title>Document</title>
+
+    <!-- bootstrap5 CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+    <!-- bootstrap5 js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
+    <!-- vue CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="card mx-auto mt-2" style="width: 18rem;">
+            <img class="card-img-top" v-bind:src="news.photo" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{news.title}}</h5>
+                <p class="card-text">{{news.abstract}}</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                news: {
+                    title: '使用',
+                    abstract: '等哈回复啊回复阿尔哈发实分院分颜色非法亚瑟发文哦发芽书法家客户',
+                    photo: 'https://picsum.photos/200/300'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

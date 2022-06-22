@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地段CDN -->
+    <script src="CDN/vue.js"></script>
+    <title>Document</title>
+
+    <!-- vue的CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- <script id="ui" type="x-template">
+        <div>
+            <p>1</p>
+            <p>2</p>
+        </div>
+    </script>
+    <template id="ui">
+        <div>
+            <p>1</p>
+            <p>2</p>
+        </div>
+    </template> -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'good morning'
+            },
+            // template:'<h1>{{message}}</h1>'
+            // 多行用``
+            template: `
+                <div>
+                    <p>1</p>
+                    <p>2</p>
+                </div>
+            `
+                // 注意只能有一个根节点
+                // template: '#ui'
+        })
+    </script>
+</body>
+
+</html>

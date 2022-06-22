@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 本地端CDN -->
+    <script src="CDN/vue.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap5.css">
+    <script src="CDN/bootstrap5_bundle.js"></script>
+    <script src="axios.js"></script>
+    <title>Document</title>
+
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+</head>
+
+<body>
+    <div class="container-fluid" id="app">
+        <div class="alert alert-info mt-2" role="alert">
+            <h5 class="text-center">按照类别筛选</h5>
+            <div class="row">
+                <div class="col-6">
+                    <form>
+                        <div class="form-group">
+                            <select class="form-control" id="exampleFormControlSelect1" v-model='section'>
+                                <option v-for="section in sections">{{section}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-success" @click="getPostsByCategory(section)">选择</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-for="posts in results">
+            <div class="col-3" v-for="post in posts">
+                <div class="card">
+                    <div class="card-header">
+                        {{post.title}}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{post.abstract}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const posts = [];
+        const SECTIONS_TW = "食品,运动,科技";
+        new Vue({
+            el: "#app",
+            data: {
+                posts,
+                results: [],
+                sections: SECTIONS_TW.split(','),
+                section: '科技'
+            },
+            mounted() {
+                axios.get('./db.json').then((response) => {
+                    this.posts = response.data;
+                    this.getPostsByCategory(this.section);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            methods: {
+                getPostsByCategory(section) {
+                    let posts = this.posts
+                        .slice()
+                        .filter(post => post.category === this.section);
+                    let i, j, chunkedArray = [],
+                        chunk = 4;
+                    for (i = 0, j = 0; i < posts.length; i += chunk, j++) {
+                        chunkedArray[j] = posts.slice(i, i + chunk);
+                    }
+                    this.results = chunkedArray;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

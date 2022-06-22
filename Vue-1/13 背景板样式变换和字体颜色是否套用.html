@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 本地端CDN -->
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <script src="CDN/vue.js"></script>
+    <link rel="stylesheet" href="CDN/fontawesom.css">
+    <style>
+        .fontColor {
+            color: blue;
+        }
+        
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+
+    <!-- Bootstrap 4 CSS 的 CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <!-- Fontawesom 的 CDN -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+    <!-- Vue 的 CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- Bootstrap 4 JavaScript 的 CDN -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>  -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+</head>
+
+<body>
+    <!-- Vue實例的掛載點 -->
+    <div id='app'>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#" @click='isFont = !isFont'>
+                <img width="30" src="PICS/home.png" alt="">
+            </a>
+        </nav>
+
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="alert w-100 text-center" role="alert" v-bind:class='[color,{"fontColor":isFont}]'>
+                    颜色设置
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ kind }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" @click='setColor("alert-primary")'>alert-primary</a>
+                        <a class="dropdown-item" href="#" @click='setColor("alert-secondary")'>alert-secondary</a>
+                        <a class="dropdown-item" href="#" @click='setColor("alert-success")'>alert-success</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Vue實例的程式碼 -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                color: 'alert-info',
+                isFont: false,
+                kind: '请选择样式'
+            },
+            watch: {
+                color() {
+                    this.kind = this.color;
+                }
+            },
+            methods: {
+                setColor(alertColor) {
+                    switch (alertColor) {
+                        case 'alert-primary':
+                            this.color = 'alert-primary';
+                            // this.kind = 'alert-primary';
+                            break;
+                        case 'alert-secondary':
+                            this.color = 'alert-secondary';
+                            // this.kind = 'alert-secondary';
+                            break;
+                        case 'alert-success':
+                            this.color = 'alert-success';
+                            // this.kind = 'alert-secondary';
+                            break;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
