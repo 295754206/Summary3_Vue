@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <card></card>
+                </div>
+                <div class="col">
+                    <card></card>
+                </div>
+                <div class="col">
+                    <card></card>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center mt-3">
+                <!-- modal的触发按钮 -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Launch demo modal
+                </button>
+                <!-- modal的显示内容 -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <modal></modal>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <template id="UI1">
+        <div>
+            <div class="mt-2">
+                <!-- 该可替换窗口记名为 title -->
+                <slot name='title'></slot>
+            </div>
+            <div>
+                <slot name='body'></slot>
+            </div>
+            <div>
+                <slot name='footer'></slot>
+            </div>
+        </div>
+    </template>
+
+    <template id="UI2">
+        <card-item>
+            <!-- 把这个 div标签传送给 title 处（插入至title这个槽口） -->
+            <div slot="title">
+                <div class="card-header">
+                    Featured
+                </div>
+            </div>
+            <div slot="body">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div slot="footer">
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </card-item>
+    </template>
+
+    <template id="UI3">
+        <card-item>
+            <div slot="title">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <!-- &times;是X号 -->
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div slot="body">
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+            </div>
+            <div slot="footer">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </card-item>
+    </template>
+
+    <script>
+        Vue.component('modal', {
+            template: '#UI3'
+        })
+
+        Vue.component('card-item', {
+            template: '#UI1'
+        })
+
+        Vue.component('card', {
+            template: '#UI2'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+
+</body>
+
+</html>

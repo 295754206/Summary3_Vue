@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="container mt-2">
+            <div class="row mt-2">
+                <div class="col">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <!-- 说明使用的是 hello 这个元件，传入 named 这个属性 -->
+                            <!-- <hello named='John'></hello> -->
+                            <component is="hello" named='John'></component>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <!-- 说明使用的是 goodbye 这个元件，绑定数据库中的 named  -->
+                            <component is='goodbye' v-bind:named='name'></component>
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            其他手写html内容...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+    </div>
+
+
+    <script>
+        const goodbye = {
+            props: {
+                named: String
+            },
+            template: `
+                <p>再见，{{named}}，欢迎下次再来！</p>
+            `
+        }
+
+        Vue.component('hello', {
+            props: {
+                named: String
+            },
+            template: `
+                <p>欢迎 {{named}} 的到来~</p>
+            `
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                name: 'Marry'
+            },
+            components: {
+                goodbye
+            }
+        })
+    </script>
+
+</body>
+
+</html>

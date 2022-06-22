@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <hello named="John"></hello>
+
+    </div>
+
+
+    <script>
+        const hello = {
+            props: ['named'],
+            template: '<p>欢迎 {{named}} 到来</p>'
+        }
+
+        new Vue({
+            el: '#app',
+            // 该区域内有效的区域性组件
+            components: {
+                hello
+            }
+        })
+    </script>
+
+</body>
+
+</html>

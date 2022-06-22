@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+            font-size: small;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div class="container mt-2">
+            <div class="container mt-2">
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">元件名称与姓名</span>
+                            </div>
+                            <input type="text" aria-label="First name" class="form-control" v-model='name'>
+                            <input type="text" aria-label="Last name" class="form-control" v-model='param'>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-book"></i></span>
+                            </div>
+                            <input v-model='course' type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <component v-bind:is='name' :named='param' :course='course'></component>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        const goodbye = {
+            props: {
+                named: String,
+                course: String
+            },
+            template: `<p>{{named}}，再见！期待你再次来到　{{course}} 这门课程 </p>`
+        }
+
+        Vue.component('hello', {
+            props: {
+                named: String,
+                course: String
+            },
+            template: `<p>欢迎 {{named}} 来到 {{course}} 这门课！</p>`
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                param: 'Jhon',
+                course: 'Vue.js 前端设计'
+            },
+            components: {
+                goodbye
+            }
+        })
+    </script>
+
+</body>
+
+</html>

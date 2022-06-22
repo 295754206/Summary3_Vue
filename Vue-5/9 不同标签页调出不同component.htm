@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container mt-2">
+            <tabs></tabs>
+        </div>
+    </div>
+
+    <template id="UI">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a
+            v-for="tab in tabs"
+            v-bind:key="tab.name"
+            class="nav-item nav-link"
+            v-bind:class="{active:currentTab.name === tab.name}"
+            v-bind:id="'nav-' + tab.name + '-tab'"
+            data-toggle="tab"
+            v-bind:href="'#nav-' + tab.name"
+            role="tab"
+          >
+            {{ tab.name }}
+          </a>
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            v-for="tab in tabs"
+            class="tab-pane fade"
+            v-bind:id="'nav-' + tab.name"
+            role="tabpanel"
+            v-bind:class="{active:currentTab.name === tab.name,show:currentTab.name === tab.name}"
+          >
+            <component :is="tab.component"></component>
+          </div>
+        </div>
+      </nav>
+    </template>
+
+    <script>
+        var tabs = [{
+            name: "Home",
+            component: {
+                template: `
+                        <div>
+                            <div>Home component</div>
+                        </div>
+                   `,
+            },
+        }, {
+            name: "Posts",
+            component: {
+                template: `
+                        <div>
+                            <div>Posts component</div>
+                        </div>
+                   `,
+            },
+        }, {
+            name: "Archive",
+            component: {
+                template: `
+                        <div>
+                            <div>Archive component</div>
+                        </div>
+                   `,
+            },
+        }, ];
+
+        Vue.component("Tabs", {
+            data() {
+                return {
+                    tabs,
+                    currentTab: tabs[0],
+                };
+            },
+            template: "#UI",
+        });
+
+        new Vue({
+            el: "#app",
+        });
+    </script>
+</body>
+
+</html>

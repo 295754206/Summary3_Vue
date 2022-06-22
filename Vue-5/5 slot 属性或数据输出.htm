@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- 直接调用slot默认范本 -->
+        <my-slot></my-slot>
+        <hr>
+
+        <!-- 输出slot标签的属性值 -->
+        <my-slot>
+            <!-- 使用文本替代默认范本 -->
+            <!-- 把slot-scope（标签内所有属性）命名为recived这个物件输出 -->
+            <template slot-scope='recived'>
+                <p>{{recived}}</p>
+            </template>
+        </my-slot>
+        <hr>
+
+        <!-- 使用点运算把slot-scope物件中的属性点名输出 -->
+        <my-slot>
+            <template slot-scope='recived'>
+                <p>{{recived.out2}}</p>
+            </template>
+        </my-slot>
+        <hr>
+
+        <!-- 两重点运算 -->
+        <my-slot>
+            <template slot-scope='recived'>
+                <p>{{recived.out3.item1}}</p>
+            </template>
+        </my-slot>
+        <hr>
+
+    </div>
+
+
+    <template id="UI">
+        <div>
+            <!-- v-bind:out3='data3'表示标签内绑定的可变数据3从该元件的数据库中提取 -->
+            <!-- 标签内其实都是属性值 -->
+            <slot out1="扩充槽标签内绑定的固定数据/属性值 1" out2="扩充槽标签内绑定的固定数据/属性值 2" v-bind:out3='data3'>
+                <!-- 直接在HTML写入的固定值 -->
+                扩充槽的数据 4 <br>
+                <!-- 使用元件中数据库中提供的数据值5 -->
+                {{data5}}
+            </slot>
+        </div>
+    </template>
+
+
+    <script>
+        Vue.component('my-slot', {
+            data() {
+                return {
+                    data3: {
+                        item1: '扩充槽数据 3 的 item-1',
+                        item2: '扩充槽数据 3 的 item-2'
+                    },
+                    data5: '扩充槽的数据 5'
+                }
+            },
+            template: '#UI'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+
+</body>
+
+</html>

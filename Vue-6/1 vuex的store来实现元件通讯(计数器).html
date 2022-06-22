@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vuex.js"></script>
+
+</head>
+
+<body>
+
+    <div id="app">
+        <p>{{count}}</p>
+        <p>
+            <!-- 这里的绑定事件是指vue实例中的函数 -->
+            <button @click='increment'>+</button>
+            <button @click='decrement'>-</button>
+        </p>
+    </div>
+
+
+    <script>
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            },
+            mutations: {
+                increment: state => state.count++,
+                decrement: state => state.count--
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            store,
+            computed: {
+                count() {
+                    // 调用外部元素前面要加$
+                    return this.$store.state.count
+                }
+            },
+            methods: {
+                increment() {
+                    // 调用外部元素里面的事件
+                    this.$store.commit('increment')
+                },
+                decrement() {
+                    this.$store.commit('decrement')
+                }
+            }
+        })
+
+
+        /* 同名映射简化写法 */
+
+        // new Vue({
+        //     el: '#app',
+        //     store,
+        //     // Vuex的映射写法：直接同名变量、同名函数直接映射
+        //     computed: Vuex.mapState(['count']),
+        //     methods: Vuex.mapMutations(['increment', 'decrement'])
+        // })
+
+
+        /* 除了映射还有别的自主要写的则可以按如下写法 */
+
+        // new Vue({
+        //     el: '#app',
+        //     store,
+        //     // 除了映射还有别的自主要写的则可以按如下写法
+        //     computed: {
+        //         ...Vuex.mapState(['count'])
+        //     },
+        //     methods: {
+        //         ...Vuex.mapMutations(['increment', 'decrement'])
+        //     }
+        // })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- slot 卡槽内不写任何内容就调用默认范本 -->
+        <my-slot></my-slot>
+
+        <!-- slot 卡槽里面写内容则覆盖默认范本 -->
+        <my-slot>
+            <p>HTML</p>
+            <p>CSS</p>
+        </my-slot>
+
+        <my-slot>
+            <template>
+                <p>HTML</p>
+                <p>CSS</p>
+            </template>
+        </my-slot>
+
+    </div>
+
+
+
+    <template id="UI">
+        <h4>
+            <slot>预设值</slot>
+            <hr>
+        </h4>
+    </template>
+
+
+
+    <script>
+        Vue.component('my-slot', {
+            template: '#UI'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+
+</body>
+
+</html>

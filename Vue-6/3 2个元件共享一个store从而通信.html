@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vuex.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col">
+                    <counter1></counter1>
+                </div>
+                <div class="col">
+                    <counter2></counter2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <template id="counter1">
+        <div class="text-center">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-counter1">#</span>
+                </div>
+                <input type="text" class="form-control" :placeholder="counter" aria-label="计数器1"
+                    aria-describedby="basic-counter1">
+            </div>
+            <button type="button" class="btn btn-success" @click='increment(2)'><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-danger"><i class="fas fa-minus"></i></button>
+        </div>
+    </template>
+
+    <template id='counter2'>
+        <div class="text-center">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-counter2">#</span>
+                </div>
+                <input type="text" class="form-control" :placeholder="counter" aria-label="计数器2"
+                    aria-describedby="basic-counter2">
+            </div>
+            <button type="button" class="btn btn-success"><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-danger"><i class="fas fa-minus"></i></button>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('counter1', {
+            computed: {
+                counter() {
+                    return this.$store.getters.counter
+                }
+            },
+            methods: {
+                increment(step) {
+                    this.$store.commit('increment', step)
+                }
+            },
+            template: '#counter1'
+        })
+
+        Vue.component('counter2', {
+            computed: {
+                counter() {
+                    return this.$store.getters.counter
+                }
+            },
+            template: '#counter2'
+        })
+
+        const store = new Vuex.Store({
+            state: {
+                counter: 0
+            },
+            getters: {
+                counter(state) {
+                    return state.counter
+                }
+            },
+            mutations: {
+                increment(state, payload) {
+                    state.counter += payload
+                }
+            },
+            actions: {
+
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            store
+        })
+    </script>
+
+</body>
+
+</html>

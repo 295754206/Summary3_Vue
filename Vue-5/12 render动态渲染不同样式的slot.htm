@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+
+</head>
+
+<body>
+
+    <div id='app'>
+        <my-slot :root-style="'div,blue,italic,bold,div01'">
+            <p>HTML</p>
+            <p>CSS</p>
+        </my-slot>
+
+        <my-slot :root-style="'p,green,normal,900,p01'">
+            <p>JavaScript</p>
+            <p>CSS框架-Bootstrap 4</p>
+            <p>JavaScript框架-Vue.js</p>
+        </my-slot>
+
+        <my-slot :root-style="'h3,red,oblique,lighter,h301'">
+            <template>
+                <p>JavaScript</p>
+                <p>CSS框架-Bootstrap 4</p>
+                <p>JavaScript框架-Vue.js</p>
+            </template>
+        </my-slot>
+    </div>
+
+
+
+    <script>
+        Vue.component('my-slot', {
+            render(createElement) {
+                var styleSetting = this.rootStyle.split(",");
+                // 创建渲染元素：大的元素标签、元素属性，htm文本
+                return createElement(styleSetting[0], {
+                        attrs: {
+                            id: styleSetting[4],
+                            style: `
+                         color: ${styleSetting[1]} ;
+                         font-style: ${styleSetting[2]};
+                         font-weight: ${styleSetting[3]};
+                        `
+                        }
+                    },
+                    // 默认文本全输出    
+                    this.$slots.default
+                )
+            },
+            props: {
+                rootStyle: {
+                    attributes: String,
+                    required: true
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vuex.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+        
+        .undone {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="containter">
+        <div class="card mx-auto mt-2" style="width:24rem">
+            <img class="card-img-top rounded" src="PICS/1.jpg">
+            <div class="card-body">
+                <div>
+                    <h2 class='text-center'>提醒事项</h2>
+                    <div id="app"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <template id="task-UI">
+        <div class="container">
+            <div class="row" v-for="todo in todos" :key='todo.id'>
+                <div class="col" @click="toggleTodo(todo.id)" @dblclick="deleteTodo(todo.id)">
+                    {{todo.task}}
+                </div>
+                <div class="col-3">
+                    <input type="checkbox" v-model="todo.done" class="form-check-input" />
+                    <span :class='{undone:!todo.done}'>{{todo.done?'完成':'未完成'}}</span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="app-UI">
+        <div>
+            <form @submit.prevent="addTodo">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">事项</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="请输入提醒事项" v-model="task" aria-label="Small"
+                        aria-describedby="inputGroup-sizing-sm">
+                </div>
+            </form>
+            <todo-list></todo-list>
+            <br>
+            <small><a href="">Designed by TangJin</a></small>
+        </div>
+    </template>
+
+
+    <script>
+        // 共享仓库
+        var state = {
+            todos: [{
+                id: 0,
+                task: "健康餐饮研究",
+                done: false
+            }, {
+                id: 1,
+                task: "好友聚餐",
+                done: true
+            }, {
+                id: 2,
+                task: "提交教学计划",
+                done: false
+            }]
+        }
+
+        // 获取store的一些下面仓库
+        var getters = {
+            getTodos: state => state.todos
+        }
+
+        // 针对state的操作变动
+        var mutations = {
+            AddTodo: (state, payload) => {
+                var newTask = {
+                    id: payload.newId,
+                    task: payload.task,
+                    done: false
+                }
+                state.todos.unshift(newTask)
+            },
+            ToggleTodo: (state, payload) => {
+                var item = state.todos.find(todo => todo.id === payload)
+                item.done = !item.done
+            },
+            DeleteTodo: (state, payload) => {
+                var index = state.todos.findIndex(todo => todo.id === payload)
+                state.todos.splice(index, 1);
+            }
+        }
+
+        // 针对外界调动的对外接口
+        var actions = {
+            addTodo: (context, payload) => {
+                context.commit("AddTodo", payload)
+            },
+            toggleTodo: (context, payload) => {
+                context.commit("ToggleTodo", payload)
+            },
+            deleteTodo: (context, payload) => {
+                context.commit("DeleteTodo", payload)
+            }
+        }
+
+        // 新建状态实例
+        var store = new Vuex.Store({
+            state: state,
+            getters: getters,
+            mutations: mutations,
+            actions: actions
+        })
+
+        Vue.component("todo-list", {
+            data() {
+                return {
+                    todos: this.$store.getters.getTodos
+                }
+            },
+            methods: {
+                toggleTodo(id) {
+                    this.$store.dispatch("toggleTodo", id);
+                },
+                deleteTodo(id) {
+                    this.$store.dispatch("deleteTodo", id);
+                }
+            },
+            template: '#task-UI'
+        })
+
+        new Vue({
+            el: '#app',
+            store,
+            data: {
+                task: "",
+                newId: 3
+            },
+            methods: {
+                addTodo() {
+                    // 返回的this是data实例
+                    this.$store.dispatch("addTodo", this);
+                    this.newId++;
+                    this.task = "";
+                }
+            },
+            template: '#app-UI'
+        })
+    </script>
+
+</body>
+
+</html>

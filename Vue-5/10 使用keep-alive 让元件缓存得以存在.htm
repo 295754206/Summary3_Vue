@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='app'>
+        <div class="container mt-2">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" @click='currentTab="hello"'>Home</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" @click='currentTab="goodbye"'>Profile</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <!-- 使用keep-alive让元件一直存活 -->
+                    <keep-alive>
+                        <component :is='currentTab'></component>
+                    </keep-alive>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const goodbye = {
+            props: {
+                named: {
+                    type: String,
+                    default: '亲爱的朋友'
+                }
+            },
+            template: `
+                <div>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-file-signature"></i></span>
+                        </div>
+                        <input type="text" class="form-control" v-model='named' placeholder="请输入你的名字" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>           
+                    <p>再见， {{ named }} ，期待下次遇见！</p>
+                </div>
+            `
+        }
+
+        Vue.component('hello', {
+            props: {
+                named: {
+                    type: String,
+                    default: '各位'
+                }
+            },
+            template: `
+                <div>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-pen-nib"></i></span>
+                        </div>
+                        <input type="text" class="form-control" v-model='named' placeholder="请输入你的名字" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <p>欢迎 {{ named }} 的到来！</p>
+                </div>
+            `
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                currentTab: 'hello'
+            },
+            components: {
+                goodbye
+            }
+        })
+    </script>
+</body>
+
+</html>

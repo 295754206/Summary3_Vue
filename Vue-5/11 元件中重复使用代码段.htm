@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='app'>
+        <hello named="Jhon"></hello>
+        <goodbye named="Maryy"></goodbye>
+    </div>
+
+
+
+    <script>
+        var myMixin = {
+            created() {
+                this.startMixin()
+            },
+            methods: {
+                startMixin() {
+                    console.log('欢迎使用 mixin 重复使用代码段')
+                }
+            }
+        }
+
+        const hello = {
+            props: ['named'],
+            // 相当于是扩充重复代码段
+            mixins: [myMixin],
+            template: '<p>欢迎 {{named}} 来到vue.js </p>'
+        }
+
+        const goodbye = {
+            props: ['named'],
+            mixins: [myMixin],
+            template: '<p>晚安，{{named}} !</p>'
+        }
+
+        new Vue({
+            el: '#app',
+            components: {
+                hello,
+                goodbye
+            }
+        })
+    </script>
+</body>
+
+</html>

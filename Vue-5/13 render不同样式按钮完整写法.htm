@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id='app'>
+        <div class="container mt-4">
+
+            <div class="row">
+                <div class="col">
+
+                    <my-button :type="'primary'" :text="'蓝色'" @handler='one'></my-button>
+
+                    <my-button :type="'success'" :text="'绿色'" @handler='two'></my-button>
+
+                    <my-button :type="'danger'" :text="'红色'"></my-button>
+
+                    <my-button :type="'info'" :text="'浅蓝色'"></my-button>
+
+                    <my-button :type="'warning'"></my-button>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    {{content}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        Vue.component('my-button', {
+            render(h) {
+                return h('button', {
+                    attrs: {
+                        type: 'button'
+                    },
+                    class: {
+                        btn: true,
+                            'btn-primary': this.type === 'primary',
+                            'btn-secondary': this.type === 'secondary',
+                            'btn-success': this.type === 'success',
+                            'btn-danger': this.type === 'danger',
+                            'btn-warning': this.type === 'warning',
+                            'btn-info': this.type === 'info',
+                            'btn-ligth': this.type === 'light',
+                            'btn-dark': this.type === 'dark',
+                            'btn-link': this.type === 'link'
+                    },
+                    // 在接收属性中接收 内部html文本
+                    domProps: {
+                        innerHTML: this.text
+                    },
+                    on: {
+                        click: this.clickHandler
+                    }
+                })
+            },
+            methods: {
+                clickHandler() {
+                    this.$emit('handler')
+                }
+            },
+            props: {
+                type: {
+                    type: String,
+                    default: 'primary'
+                },
+                text: {
+                    type: String,
+                    default: '默认文本'
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                content: ''
+            },
+            methods: {
+                one() {
+                    this.content = '蓝色按钮被按下'
+                },
+                two() {
+                    this.content = '绿色按钮被按下'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
