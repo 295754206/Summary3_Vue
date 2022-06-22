@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vue-router.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+        
+        .navbar {
+            background: #FFE4E1;
+            ;
+        }
+        
+        .nav-link,
+        .navbar-brand {
+            color: #008000;
+            cursor: pointer;
+        }
+        
+        .nav-link {
+            margin-right: 1em !important;
+        }
+        
+        .nav-link:hover {
+            background: #f4f4f4;
+            color: #008000;
+        }
+        
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+        
+        .navbar-toggler {
+            background: #fff !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="navbar navbar-expand-sm">
+            <a class="navbar-brand" href="#">
+                <router-link to='/about'><i class="fab fa-asymmetrik"></i></router-link>
+
+            </a>
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <router-link to='/home'><i class="fas fa-home"></i>{{ Home }}</router-link>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <router-link to='/features'><i class="fas fa-award"></i>{{ Features }}</router-link>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <router-link to='/pricing'><i class="fas fa-dollar-sign"></i>{{ Pricing }}</router-link>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">
+                            <router-link to='/disabled'><i class="fab fa-accessible-icon"></i>{{ Disabled}}
+                            </router-link>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <router-view></router-view>
+    </div>
+
+
+    <script>
+        const About = {
+            template: '<h1>关于</h1>'
+        }
+        const Home = {
+            template: `
+                <div>
+                    <h1>首页</h1>
+                    <button class="btn btn-primary"
+                        @click="$router.push({
+                            name:'features',
+                            params:{id:2}
+                        })"> 前往第二项特色 
+                    </button>
+                    <button class="btn btn-success"
+                        @click="$router.push('about')"> 前往第三项关于，使用push方法，可以回退
+                    </button>
+                    <button class="btn btn-info"
+                        @click="$router.replace('about')"> 前往第三项关于，使用replace方法，替代页面不留痕且无法回退
+                    </button>
+                </div>
+            `
+        }
+        const Features = {
+            template: `
+                <div>
+                    <h1>特色</h1>
+                    <p>{{ $route.params.id }}</p>
+                    <router-view></router-view>
+                </div>
+            `
+        }
+        const Pricing = {
+            template: '<h1>价格</h1>'
+        }
+        const Disabled = {
+            template: '<h1>停用</h1>'
+        }
+
+        const FeaturesProfile = {
+            computed: {
+                featuresAt(id) {
+                    return featuresProfileDec[this.$route.params.id]
+                }
+            },
+            template: `
+                <div>
+                    <h3>特色 - {{ $route.params.id }} 说明</h3>
+                    <hr/>
+                    <p>特色下说明页面</p>
+                    <p>{{featuresAt}}</p>
+                </div>
+            `
+        }
+        const FeaturesPosts = {
+            template: `
+                <div>
+                    <h3>特色 - {{ $route.params.id }}</h3>
+                    <p>特色下使用者见证页面</p>
+                </div>
+            `
+        }
+
+        const routes = [{
+            path: '/',
+            component: Home
+        }, {
+            path: '/about',
+            component: About
+        }, {
+            path: '/home',
+            component: Home
+        }, {
+            path: '/features/:id',
+            component: Features,
+            // 具名路由
+            name: 'features',
+            children: [{
+                path: 'profile',
+                component: FeaturesProfile
+            }, {
+                path: 'posts',
+                component: FeaturesPosts
+            }]
+        }, {
+            path: '/pricing',
+            component: Pricing
+        }, {
+            path: '/disabled',
+            component: Disabled
+        }]
+
+        const featuresProfileDec = {
+            1: '操作简单',
+            2: '界面美观',
+            3: '产品时髦'
+        }
+
+        const router = new VueRouter({
+            routes
+        })
+
+        new Vue({
+            el: '#app',
+            router,
+            data: {
+                Home: '首页',
+                Features: '特色',
+                Pricing: '价格',
+                Disabled: '停用'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

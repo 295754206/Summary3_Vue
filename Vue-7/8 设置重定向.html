@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vue-router.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    <ul>
+                        <li>
+                            <router-link to="/home">信息类图书</router-link>
+                        </li>
+                        <li>
+                            <router-link to='/foods'>健康类图书</router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <router-view></router-view>
+                    <router-view name="part1"></router-view>
+                    <router-view name="part2"></router-view>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const TechBooks = {
+            template: '<div>信息类别图书</div>'
+        }
+        const FoodsBooks = {
+            template: '<div>健康饮食图书</div>'
+        }
+        const TechBooksListZH = {
+            template: `
+                <div>
+                    <h3>繁体版本</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const TechBooksListCN = {
+            template: `
+                <div>
+                    <h3>简体版本</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const FoodsBooksList1 = {
+            template: `
+                <div>
+                    <h3>保健养生</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const FoodsBooksList2 = {
+            template: `
+                <div>
+                    <h3>食物疗法</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+
+        const router = new VueRouter({
+            // mode: 'history',
+            routes: [{
+                // 设置重定向
+                path: '/home',
+                redirect: '/tech'
+            }, {
+                path: '/tech',
+                components: {
+                    default: TechBooks,
+                    part1: TechBooksListZH,
+                    part2: TechBooksListCN
+                }
+            }, {
+                path: '/foods',
+                components: {
+                    default: FoodsBooks,
+                    part1: FoodsBooksList1,
+                    part2: FoodsBooksList2
+                }
+            }, {
+                // 设置任意重定向回到home
+                path: '*',
+                redirect: '/home'
+            }]
+        })
+
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+
+</body>
+
+</html>

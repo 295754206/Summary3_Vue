@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/vue-router.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+            background-color: #f0f7e8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    <ul>
+                        <li>
+                            <router-link to="/tech">信息类图书</router-link>
+                        </li>
+                        <li>
+                            <router-link to='/foods'>健康类图书</router-link>
+                        </li>
+                        <li>
+                            <router-link to='/collection'>会员图书</router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <router-view></router-view>
+                    <router-view name="part1"></router-view>
+                    <router-view name="part2"></router-view>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <template id="LOGIN">
+        <div class="card">
+            <div class="card-header">
+                <h3>登录</h3>
+            </div>
+            <div class="card-body">
+                <form v-on:submit.prevent="login">
+                    <div class="form-group">
+                        <label><i class="material-icons text-success">email</i>电子邮箱：</label>
+                        <input type="text" v-model="email" placeholder="example@mail.com"><br>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="material-icons text-success">lock</i>密 码：</label>
+                        <input type="password" v-model="password" placeholder="请输入你的密码">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Sign In" />
+                    </div>
+                    <p>没有账户？您可以选择
+                        <router-link to="/signup">注册新账户</router-link>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </template>
+
+    <template id="SIGNUP">
+        <div class="card">
+            <div class="card-header">
+                <h3>注册</h3>
+            </div>
+            <div class="card-body">
+                <form v-on:submit.prevent="signUp">
+                    <div class="form-group">
+                        <label><i class="material-icons text-primary">email</i>电子邮箱：</label>
+                        <input type="text" v-model="email" placeholder="example@mailserver"><br>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="material-icons text-primary">lock</i>密 码：</label>
+                        <input type="password" v-model="password" placeholder="请输入您的密码">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Sign Up" />
+                    </div>
+                    
+                    <span>已有账户？您可以选择
+                        <router-link to="/login">登录</router-link>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        const TechBooks = {
+            template: '<div>信息类别图书</div>'
+        }
+        const FoodsBooks = {
+            template: '<div>健康饮食图书</div>'
+        }
+        const CollectionBooks = {
+            template: '<div>会员图书</div>'
+        }
+        const TechBooksListZH = {
+            template: `
+                <div>
+                    <h3>繁体版</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const TechBooksListCN = {
+            template: `
+                <div>
+                    <h3>简体版</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const FoodsBooksList1 = {
+            template: `
+                <div>
+                    <h3>保健养生</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+        const FoodsBooksList2 = {
+            template: `
+                <div>
+                    <h3>食物疗法</h3>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            `
+        }
+
+        const Login = {
+            data() {
+                return {
+                    email: '',
+                    password: ''
+                }
+            },
+            template: '#LOGIN'
+        }
+        const SignUp = {
+            data() {
+                return {
+                    email: '',
+                    password: ''
+                }
+            },
+            template: '#SIGNUP'
+        }
+
+        const router = new VueRouter({
+            // mode: 'history',
+            routes: [{
+                path: '/home',
+                redirect: '/tech'
+            }, {
+                path: '/tech',
+                components: {
+                    default: TechBooks,
+                    part1: TechBooksListZH,
+                    part2: TechBooksListCN
+                }
+            }, {
+                path: '/foods',
+                components: {
+                    default: FoodsBooks,
+                    part1: FoodsBooksList1,
+                    part2: FoodsBooksList2
+                }
+            }, {
+                path: '/collection',
+                component: CollectionBooks,
+                meta: {
+                    // 要求有验证机制
+                    requiresAuth: true
+                }
+            }, {
+                path: '/login',
+                component: Login
+            }, {
+                path: '/signup',
+                component: SignUp
+            }]
+        })
+
+        router.beforeEach((to, from, next) => {
+            const currentUser = null //firebase.auth().currentUser;
+            const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+            if (requiresAuth && !currentUser) {
+                // 要求验证且用户不对的话
+                next('/login')
+            } else if (requiresAuth && currentUser) {
+                next()
+            } else {
+                next()
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+
+</body>
+
+</html>

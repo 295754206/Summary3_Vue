@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单记事本</title>
+
+    <script src="CDN/vue.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <script src="https://unpkg.com/vue-firestore"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+        
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container text-center">
+                <h1 class="display-4">简单记事本</h1>
+                <p class="lead">增加、删除和管理记事本</p>
+            </div>
+        </div>
+        <div class="container-fluid mt-4">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h3>新增记事</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">摘要</span>
+                                </div>
+                                <input type="text" class="form-control" v-model="newNote.name" placeholder="请输入摘要" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">内容</span>
+                                </div>
+                                <input type="text" class="form-control" v-model="newNote.content" placeholder="请输入内容" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <button class='btn btn-primary' @click='addNote'>新增</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3 class='text-center'>清单</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th>名称</th>
+                                <th>内容</th>
+                                <th colspan="2">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="note of notes" :key="note['.key']">
+                                <td>{{note.name}}--{{ note.created }}</td>
+                                <td>{{ note.content }}</td>
+                                <td class="text-center">
+                                    <button type='button' class='btn btn-danger btn-sm btn-circle' v-on:click="deleteNote(note['.key'])">X</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCNI5PAdtm6shO3K-yeffUnW9t-E0_Lmks",
+            authDomain: "some-96bc7.firebaseapp.com",
+            projectId: "some-96bc7",
+            storageBucket: "some-96bc7.appspot.com",
+            messagingSenderId: "882772799950",
+            appId: "1:882772799950:web:9e9240b6afc6538d1b3b9f",
+            measurementId: "G-HTFEN8E7ZJ"
+        };
+        // Initialize Firebase
+        let app = firebase.initializeApp(firebaseConfig);
+        // firebase.analytics();
+
+        let db = app.firestore(app)
+        const settings = { /* your settings... */
+            timestampsInSnapshots: true
+        };
+        db.settings(settings);
+
+        new Vue({
+            el: '#app',
+            data: {
+                newNote: {
+                    name: '',
+                    content: ''
+                }
+            },
+            firestore() {
+                return {
+                    notes: db.collection('notes').orderBy('created')
+                }
+            },
+            methods: {
+                addNote() {
+                    db.collection('notes').add({
+                        name: this.newNote.name,
+                        content: this.newNote.content,
+                        created: new Date()
+                    }).then(ref => {
+                        this.newNote.name = ''
+                        this.newNote.content = ''
+                        this.newNote.created = null
+                    }).catch(error => {
+                        console.log("新增文件时候发生错误：", error)
+                    })
+                },
+                deleteNote(key) {
+                    console.log('deleteNote key = ', key)
+                    db.collection('notes').doc(key).delete().then(() => {
+                        console.log('deleteNote function excuted..')
+                    }).catch((error) => {
+                        alert("删除文件发生错误：", error)
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
