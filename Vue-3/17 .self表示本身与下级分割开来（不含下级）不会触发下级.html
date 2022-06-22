@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div>
+        <div id="app">
+            <div>
+                <button @click='in1'>正常</button>
+            </div>
+            <div @click.self='out1'>
+                <button @click='in1'>.self表示本身与下级分割开来（不含下级）不会触发下级 </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                in1() {
+                    alert('里面元素触发');
+                },
+                out1() {
+                    alert('外面元素触发');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

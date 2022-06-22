@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div>
+        <div id="app">
+            <a href="https://www.baidu.com" @click='preventDefault($event)'>模拟阻止预设行为</a>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                preventDefault(event) {
+                    event.preventDefault();
+                    alert('已经完成阻止默认行为发生')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

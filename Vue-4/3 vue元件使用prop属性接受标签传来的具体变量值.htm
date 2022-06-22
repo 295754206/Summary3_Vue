@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <hello named='John'></hello>
+    </div>
+
+    <template id="UI">
+        <p>
+            欢迎{{named}}来到vue.js
+        </p>
+    </template>
+
+    <script>
+        Vue.component('hello', {
+            // 使用props属性来接受标签传来的信息，里面属性可直接当自定义变量来用
+            props: ['named'],
+            template: '#UI'
+        })
+
+        // 例如可以直接使用如下：
+        // Vue.component('hello', {
+        //     props: ['named'],
+        //     data() {
+        //         return {
+        //             name: '亲爱的' + this.named
+        //         }
+        //     },
+        //     template:'<p>欢迎{{name}}来到vue.js</p>'
+        // })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

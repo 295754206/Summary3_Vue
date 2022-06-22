@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <button @click.once='onlyOne'>一次</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                onlyOne() {
+                    alert("只有一次")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

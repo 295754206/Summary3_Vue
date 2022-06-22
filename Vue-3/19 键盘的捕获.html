@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Vue實例的掛載點 -->
+    <div id='app'>
+        <input type='text' v-model='text' @keyup.enter='enterPressed' placeholder="按鍵修飾符號.enter">
+        <input type='text' v-model='text' @keyup.13='enterPressed' placeholder="按鍵修飾符號.13">
+        <input type='text' v-model='text' @keyup.ctrl.alt.65='enterPressed' placeholder="ctrl + alt + a">
+    </div>
+    <!-- Vue 的 CDN -->
+    <script src="CDN/vue2.js"></script>
+
+    <!-- Vue實例的程式碼 -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: ''
+            },
+            methods: {
+                enterPressed() {
+                    alert(`${this.text} - 按鍵修飾符號.enter`)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

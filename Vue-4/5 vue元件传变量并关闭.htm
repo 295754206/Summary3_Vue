@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container mt-3">
+            <input type="text" v-model:value='name'>
+            <button @click='showHello=true'>打招呼</button>
+            <hello v-show='showHello' v-bind:named='name' @close='showHello=false'></hello>
+        </div>
+    </div>
+
+    <template id="UI">
+        <div>
+            <p>欢迎 {{named}} 来到这里</p>
+            <!-- $emit生成自定义事件 -->
+            <button @click='$emit("close")'>关闭</button>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('hello', {
+            props: ['named'],
+            template: '#UI'
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                showHello: false
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" class='container'>
+        <div class="row">
+            <div class="col">
+                <counter></counter>
+            </div>
+            <div class="col">
+                <counter></counter>
+            </div>
+        </div>
+    </div>
+
+    <template id="counterUI">
+        <div class="text-center">
+            <div class="alert alert-primary" role="alert">
+                {{ currentValue }}
+            </div>
+            <button type="button" class="btn btn-success" @click='increase'><i class="fas fa-plus"></i></button>
+            <button type="button" class="btn btn-danger" @click='decrease'><i class="fas fa-minus"></i></button>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('counter', {
+            // 元件中的data一定是个函数，这是为了考研重复使用不冲突
+            data() {
+                return {
+                    currentValue: 0
+                }
+            },
+            methods: {
+                increase() {
+                    this.currentValue++;
+                },
+                decrease() {
+                    this.currentValue--;
+                }
+            },
+            template: '#counterUI'
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+
+</body>
+
+</html>

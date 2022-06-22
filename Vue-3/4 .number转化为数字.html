@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <script src="CDN/vue2.js"></script>
+    <!-- <link rel="stylesheet" href="CDN/fontawesome.css"> -->
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+
+    <!-- Bootstrap 4 CSS 的 CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Vue 的 CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- Bootstrap 4 JavaScript 的 CDN -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+</head>
+
+<body>
+
+    <div id="app1" class="container-fluid mt-2">
+        <div>这个是字串加法（没使用.number）</div>
+        <form class="form-inline" v-on:submit.prevent="onSubmit">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">数字1</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="n1">
+            </div>
+
+            <i class="fas fa-plus-circle"></i>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">数字2</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model="n2">
+            </div>&nbsp;
+
+            <button type="submit" class="btn btn-primary mb-2">
+                <i class="fas fa-calculator"></i>
+            </button>
+        </form>
+
+    </div>
+
+    <div id="app2" class="container-fluid mt-2">
+        <div>这个使用了.number</div>
+        <form class="form-inline" v-on:submit.prevent="onSubmit">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">数字1</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model.number="n1">
+            </div>
+
+            <i class="fas fa-plus-circle"></i>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">数字2</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1" v-model.number="n2">
+            </div>&nbsp;
+
+            <button type="submit" class="btn btn-primary mb-2">
+                <i class="fas fa-calculator"></i>
+            </button>
+        </form>
+
+    </div>
+
+
+    <script>
+        new Vue({
+            el: '#app1',
+            data: {
+                n1: 0,
+                n2: 0,
+                result: 0
+            },
+            methods: {
+                onSubmit() {
+                    // 输出类型是不是匹配，默认即使预设数字也是转为字串
+                    console.log('typeof', typeof this.nbr1 === 'number')
+                    console.log('typeof', typeof this.nbr2 === 'number')
+                    let result = this.n1 + this.n2
+                    alert(`计算结果是 ${result}`)
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app2',
+            data: {
+                n1: 0,
+                n2: 0,
+                result: 0
+            },
+            methods: {
+                onSubmit() {
+                    // 输出类型是不是匹配，默认即使预设数字也是转为字串
+                    console.log('typeof', typeof this.n1 === 'number')
+                    console.log('typeof', typeof this.n2 === 'number')
+                    let result = this.n1 + this.n2
+                    alert(`计算结果是 ${result}`)
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

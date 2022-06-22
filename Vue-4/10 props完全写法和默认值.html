@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+        <div class="container">
+            <div class="alert alert-info mt-2" role="alert">
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <input type="text" v-model:value='name' class="form-control" placeholder="请输入你的名字" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button @click='showHello=true' class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="far fa-grin-beam"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 在缺乏必须值时候会调用default -->
+                <div class="row">
+                    <!-- 如果不填写则会默认启用默认值 -->
+                    <hello v-show='showHello' v-bind:named="name" @close='showHello=false' class="mx-auto"></hello>
+                </div>
+                <div class="row">
+                    <!-- 不传输v-bind:named='name'，同样也会启用default属性 -->
+                    <hello v-show='showHello' @close='showHello=false' class="mx-auto"></hello>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id='helloUI'>
+        <div class="text-center">
+            <div class="alert alert-info" role="alert">
+                <p>欢迎 {{ named }} 来到</p>
+                <button type="button" class="btn btn-info" @click='$emit("close")'>关闭</button>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('hello', {
+            props: {
+                named: {
+                    // 要求一定为String
+                    type: String,
+                    // 默认值
+                    default: '亲爱的读者',
+                    // 是否为必须（标签传值是）
+                    required: true,
+                    // 传入值检查
+                    validator(value) {
+                        console.log('正在检查')
+                        return true
+                            // 要求不能包含'@'
+                            // return value.indexOf('@')<0
+                            // 要求必须有'@'
+                            // return value.indexOf('@')>-1
+                    }
+                }
+            },
+            template: '#helloUI'
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                showHello: false
+            }
+        })
+    </script>
+
+</body>
+
+</html>

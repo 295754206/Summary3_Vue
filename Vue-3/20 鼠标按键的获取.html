@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Vue實例的掛載點 -->
+    <div id='app'>
+        <!-- 默认开右键会开启菜单 -->
+        <button @click.right.prevent='right'>按右键</button>
+        <button @click.middle.prevent='center'>按中间键</button>
+    </div>
+    <!-- Vue 的 CDN -->
+    <script src="CDN/vue2.js"></script>
+
+    <!-- Vue實例的程式碼 -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                text: ''
+            },
+            methods: {
+                right() {
+                    alert('按下右键');
+                },
+                middle() {
+                    alert('按下中键');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

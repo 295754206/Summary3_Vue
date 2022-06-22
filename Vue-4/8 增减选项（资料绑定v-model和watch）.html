@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+        <!-- 用v-model做资料绑定 -->
+        <todo v-model='out'></todo>
+        <ul>
+            <li v-for='todo in todos' @click='removeItem(todo)'>{{ todo }} </li>
+        </ul>
+    </div>
+
+    <template id='todoUI'>
+        <div>
+            <label>待办事项</label>
+            <input type='text' v-on:keyup.enter.esc='newItem'>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('todo', {
+            methods: {
+                newItem($event) {
+                    this.$emit("input", $event.target.value)
+                    $event.target.value = ''
+                }
+            },
+            template: '#todoUI'
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                todos: [],
+                out: ''
+            },
+            // 增加一个watch来关注out的变化
+            watch: {
+                out(value) {
+                    this.todos.push(value)
+                }
+            },
+            methods: {
+                addItem(value) {
+                    this.todos.push(value)
+                },
+                removeItem(item) {
+                    let ndx = this.todos.indexOf(item)
+                    if (ndx != -1) {
+                        this.todos.splice(ndx, 1)
+                    }
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

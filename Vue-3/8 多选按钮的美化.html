@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CDN/bootstrap.css">
+    <script src="CDN/bootstrap1.js"></script>
+    <script src="CDN/bootstrap2.js"></script>
+    <script src="CDN/bootstrap3.js"></script>
+    <script src="CDN/vue2.js"></script>
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <title>Document</title>
+
+    <!-- Fontawesom 的 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Bootstrap 4 CSS 的 CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <!-- Vue 的 CDN -->
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <!-- Bootstrap 4 JavaScript 的 CDN -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+
+</head>
+
+<body>
+
+    <div id="app" class="container-fluid mt-2">
+
+        <div class="row">
+            <div class="alert alert-success w-100 text-center" role="alert">
+                <!-- <h4>待办事务<span class="badge badge-pill badge-secondary">{{todos.length}}</span></h4> -->
+                <h4>待办事务<span class="badge badge-pill badge-secondary">{{todo_len}}</span></h4>
+            </div>
+        </div>
+
+        <div v-for='todo in todos'>
+            <div class="row text-center">
+                <div class="col">
+                    <div class="form-check">
+                        <!-- 是否勾选看v-model:'todo.done' 注意需要在div的class为form-check才能使用，而自己需要是input标签才可以 -->
+                        <input type="checkbox" class="form-check-input" v-model='todo.done' value='' v-bind:id="todo.id">
+                        <span v-if='todo.done'>
+                            <i class="far fa-check-circle"></i>
+                        </span>
+                        <span v-else>
+                            <i class="fas fa-tasks"></i>
+                        </span>
+                        <label class="form-check-label" for="todo.id">{{todo.content}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr> {{todos}}
+    </div>
+
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                todos: [{
+                    id: 1,
+                    content: '参加研讨会议',
+                    done: false
+                }, {
+                    id: 2,
+                    content: '前往好友聚会',
+                    done: false
+                }, {
+                    id: 3,
+                    content: '担任前端讲师',
+                    done: true
+                }]
+            },
+            computed: {
+                todo_len() {
+                    let lens = this.todos.slice().filter(x => x.done == false);
+                    return lens.length;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- vue元件标签必须在绑定vue实例的标签内部才能运作 -->
+        <vue-book></vue-book>
+    </div>
+
+    <script>
+        Vue.component('vue-book', {
+            template: `
+                <div>
+                    <h3>这是标题</h3>
+                    <p>这是具体应用</p>
+                </div>
+            `
+        })
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+
+</body>
+
+</html>

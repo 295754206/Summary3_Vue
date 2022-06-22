@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="CDN/vue2.js"></script>
+
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+        <todo></todo>
+        <ul>
+            <li v-for='todo in todos' @click='removeItem(todo)'>{{ todo }} </li>
+        </ul>
+    </div>
+
+    <template id='todoUI'>
+        <div>
+            <label>待办事项</label>
+            <input type='text' v-on:keyup.enter.esc='newItem'>
+        </div>
+    </template>
+
+
+
+    <script>
+        Vue.component('todo', {
+            methods: {
+                newItem($event) {
+                    // 使用新建Vue对象来产生一个eventBus来前后传送系统
+                    eventBus.$emit("additem", $event.target.value)
+                    $event.target.value = ''
+                }
+            },
+            template: '#todoUI'
+        })
+
+        const eventBus = new Vue()
+
+        new Vue({
+            el: '#app',
+            data: {
+                todos: []
+            },
+            created() {
+                eventBus.$on("additem", value => {
+                    this.todos.push(value);
+                })
+            },
+            methods: {
+                removeItem(item) {
+                    let ndx = this.todos.indexOf(item)  
+                    if (ndx != -1) {                    
+                        this.todos.splice(ndx, 1)       
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

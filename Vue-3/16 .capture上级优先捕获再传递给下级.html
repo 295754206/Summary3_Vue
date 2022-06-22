@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="CDN/vue2.js"></script>
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div>
+        <div id="app">
+            <div @click='out1'>
+                <button @click='in1'>层序</button>
+            </div>
+            <div @click.capture='out1'>
+                <button @click='in1'>.capture上级优先捕获再传递给下级</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            methods: {
+                in1() {
+                    alert('里面元素触发');
+                },
+                out1() {
+                    alert('外面元素触发');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
